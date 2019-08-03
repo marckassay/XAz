@@ -141,15 +141,15 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/marckassay/XAz/blob/0.0.1/docs/Invoke-AzureCLIDownload.md</maml:uri>
+        <maml:uri>https://github.com/marckassay/XAz/blob/0.0.2/docs/Invoke-AzureCLIDownload.md</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Invoke-AzureCLIDownload.ps1</maml:linkText>
-        <maml:uri>https://github.com/marckassay/XAz/blob/0.0.1/src/utility/Invoke-AzureCLIDownload.ps1</maml:uri>
+        <maml:uri>https://github.com/marckassay/XAz/blob/0.0.2/src/utility/Invoke-AzureCLIDownload.ps1</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Invoke-AzureCLIDownload.Tests.ps1</maml:linkText>
-        <maml:uri>https://github.com/marckassay/XAz/blob/0.0.1/test/utility/Invoke-AzureCLIDownload.Tests.ps1</maml:uri>
+        <maml:uri>https://github.com/marckassay/XAz/blob/0.0.2/test/utility/Invoke-AzureCLIDownload.Tests.ps1</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>

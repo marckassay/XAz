@@ -12,7 +12,7 @@
     RootModule        = 'XAz.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.0.1'
+    ModuleVersion = '0.0.2'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -30,7 +30,7 @@
     Copyright         = '(c) Marc Kassay. All rights reserved.'
 
     # Description of the functionality provided by this module
-    # Description = ''
+    Description       = 'XAz is a collection of PowerShell Core scripts to interface with Az module'
 
     # Minimum version of the PowerShell engine required by this module
     PowerShellVersion = '6.0'
@@ -100,7 +100,7 @@
             Tags       = 'Azure', 'az', 'CLI', 'Core', 'download'
 
             # A URL to the license for this module.
-            LicenseUri = 'https://raw.githubusercontent.com/marckassay/XAz/0.0.1/LICENSE'
+            LicenseUri = 'https://raw.githubusercontent.com/marckassay/XAz/0.0.2/LICENSE'
 
             # A URL to the main website for this project.
             ProjectUri = 'https://github.com/marckassay/XAz'
@@ -125,7 +125,7 @@
     } # End of PrivateData hashtable
 
     # HelpInfo URI of this module
-    HelpInfoURI       = 'https://github.com/marckassay/XAz/tree/0.0.1'
+    HelpInfoURI = 'https://github.com/marckassay/XAz/tree/0.0.2'
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''
