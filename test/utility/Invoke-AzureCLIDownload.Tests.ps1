@@ -25,7 +25,7 @@ Describe 'Test Invoke-AzureCLIDownload' {
 
             New-MockObject -Type Microsoft.PowerShell.Commands.BasicHtmlWebResponseObject | Add-Member -MemberType NoteProperty -Name Content -Value $($Encode.GetBytes($Bytes)) -Force -PassThru
 
-            Start-Sleep -Milliseconds 1000 | Out-Null
+            Start-Sleep -Milliseconds 500 | Out-Null
 
         } -ModuleName XAz
 

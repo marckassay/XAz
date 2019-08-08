@@ -1,16 +1,44 @@
 function Invoke-AzureCLIDownload {
+
+    <#
+    .SYNOPSIS
+    Short description
+    
+    .DESCRIPTION
+    Long description
+    
+    .PARAMETER Version
+    Parameter description
+    
+    .PARAMETER Path
+    Parameter description
+    
+    .PARAMETER AutoExecute
+    Parameter description
+    
+    .EXAMPLE
+    An example
+    
+    .NOTES
+    General notes
+    #>
+    
     [CmdletBinding(PositionalBinding = $true)]
     [OutputType()]
-    Param(
-        [Parameter(Mandatory = $true,
+    param(
+        [Parameter(
+            Mandatory = $true,
             HelpMessage = "The Azure CLI semver.",
-            Position = 0)]
+            Position = 0
+        )]
         [ValidatePattern("(\d\.){2}(\d)")]
         [string]$Version,
 
-        [Parameter(Mandatory = $false,
+        [Parameter(
+            Mandatory = $false,
             HelpMessage = "The location where the file will be downloaded.",
-            Position = 1)]
+            Position = 1
+        )]
         [string]$Path = '.',
 
         [switch]

@@ -12,7 +12,7 @@
     RootModule        = 'XAz.psm1'
 
     # Version number of this module.
-    ModuleVersion = '0.0.2'
+    ModuleVersion = '0.0.3'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -51,7 +51,7 @@
     # ProcessorArchitecture = ''
 
     # Modules that must be imported into the global environment prior to importing this module
-    # RequiredModules = @()
+    # RequiredModules = @(@{ModuleName = 'PSDocker'; GUID = '22cb8e1e-1c64-446b-960c-7c5e8529eb31'; ModuleVersion = '0.0.1'; })
 
     # Assemblies that must be loaded prior to importing this module
     # RequiredAssemblies = @()
@@ -70,7 +70,11 @@
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport = @(
-        'Invoke-AzureCLIDownload'
+        'ConvertTo-Base64',
+        'Get-XAzRegistryCredentials',
+        'Invoke-AzureCLIDownload',
+        'New-SelfSignedCert',
+        'New-XAzResourceGroupDeployment'
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
@@ -100,7 +104,7 @@
             Tags       = 'Azure', 'az', 'CLI', 'Core', 'download'
 
             # A URL to the license for this module.
-            LicenseUri = 'https://raw.githubusercontent.com/marckassay/XAz/0.0.2/LICENSE'
+            LicenseUri = 'https://raw.githubusercontent.com/marckassay/XAz/0.0.3/LICENSE'
 
             # A URL to the main website for this project.
             ProjectUri = 'https://github.com/marckassay/XAz'
@@ -125,7 +129,7 @@
     } # End of PrivateData hashtable
 
     # HelpInfo URI of this module
-    HelpInfoURI = 'https://github.com/marckassay/XAz/tree/0.0.2'
+    HelpInfoURI = 'https://github.com/marckassay/XAz/tree/0.0.3'
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''
