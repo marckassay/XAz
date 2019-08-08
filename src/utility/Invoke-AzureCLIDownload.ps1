@@ -1,27 +1,4 @@
 function Invoke-AzureCLIDownload {
-
-    <#
-    .SYNOPSIS
-    Short description
-    
-    .DESCRIPTION
-    Long description
-    
-    .PARAMETER Version
-    Parameter description
-    
-    .PARAMETER Path
-    Parameter description
-    
-    .PARAMETER AutoExecute
-    Parameter description
-    
-    .EXAMPLE
-    An example
-    
-    .NOTES
-    General notes
-    #>
     
     [CmdletBinding(PositionalBinding = $true)]
     [OutputType()]

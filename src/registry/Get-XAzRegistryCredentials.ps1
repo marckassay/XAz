@@ -6,24 +6,6 @@ Register-ArgumentCompleter `
     -ScriptBlock $ContainerRegistryNameCompleter
 
 function Get-XAzRegistryCredentials {
-
-    <##
-    .SYNOPSIS
-    Makes 2 Az function calls to get Azure Container Registry credentials.
-    
-    .DESCRIPTION
-    The returned object is a hashtable that contains an Image array. That array is in the shape of 
-    ImageRegistryCredentials object which is used in ARM templates.
-    
-    .PARAMETER ContainerRegistryName
-    Autocompleter enabled. The container name to retrieve the credentials from.
-    
-    .EXAMPLE
-    An example
-    
-    .NOTES
-    General notes
-    #>
     
     [CmdletBinding(
         PositionalBinding = $true

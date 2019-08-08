@@ -1,7 +1,7 @@
 ---
 external help file: XAz-help.xml
 Module Name: XAz
-online version: https://github.com/marckassay/XAz/blob/0.0.2/docs/Invoke-AzureCLIDownload.md
+online version: https://github.com/marckassay/XAz/blob/0.0.3/docs/Invoke-AzureCLIDownload.md
 schema: 2.0.0
 ---
 
@@ -111,6 +111,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[Invoke-AzureCLIDownload.ps1](https://github.com/marckassay/XAz/blob/0.0.2/src/utility/Invoke-AzureCLIDownload.ps1)
+[Invoke-AzureCLIDownload.ps1](https://github.com/marckassay/XAz/blob/0.0.3/src/utility/Invoke-AzureCLIDownload.ps1)
 
-[Invoke-AzureCLIDownload.Tests.ps1](https://github.com/marckassay/XAz/blob/0.0.2/test/utility/Invoke-AzureCLIDownload.Tests.ps1)
+[Invoke-AzureCLIDownload.Tests.ps1](https://github.com/marckassay/XAz/blob/0.0.3/test/utility/Invoke-AzureCLIDownload.Tests.ps1)

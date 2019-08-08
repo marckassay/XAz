@@ -7,29 +7,6 @@ New-Alias `
 
 function New-SelfSignedCert {
     
-    <#
-    .SYNOPSIS
-    Short description
-    
-    .DESCRIPTION
-    Long description
-    
-    .PARAMETER OutPath
-    Parameter description
-    
-    .PARAMETER Years
-    Parameter description
-    
-    .PARAMETER Days
-    Parameter description
-    
-    .EXAMPLE
-    An example
-    
-    .NOTES
-    General notes
-    #>
-    
     [CmdletBinding(PositionalBinding = $true)]
     [OutputType([string])]
     Param(

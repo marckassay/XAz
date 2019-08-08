@@ -7,6 +7,22 @@ XAz is a collection of [PowerShell Core](https://docs.microsoft.com/en-us/powers
 
 ## API
 
-#### [`Invoke-AzureCLIDownload`](https://github.com/marckassay/XAz/blob/0.0.1/docs/Invoke-AzureCLIDownload.md)
+#### [`ConvertTo-Base64`](https://github.com/marckassay/XAz/blob/0.0.3/docs/ConvertTo-Base64.md)
 
-Downloads MSI for ['Azure CLI'](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest) to the host computer.
+Streams file content into the GNU base64 executeable that is bundled with Git. 
+
+#### [`Get-XAzRegistryCredentials`](https://github.com/marckassay/XAz/blob/0.0.3/docs/Get-XAzRegistryCredentials.md)
+
+Makes 2 Az function calls to get Azure Container Registry credentials. 
+
+#### [`Invoke-AzureCLIDownload`](https://github.com/marckassay/XAz/blob/0.0.3/docs/Invoke-AzureCLIDownload.md)
+
+Downloads MSI for ['Azure CLI'](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest) to the host computer. 
+
+#### [`New-SelfSignedCert`](https://github.com/marckassay/XAz/blob/0.0.3/docs/New-SelfSignedCert.md)
+
+Creates a self-signed certificate using `openssl`. 
+
+#### [`New-XAzResourceGroupDeployment`](https://github.com/marckassay/XAz/blob/0.0.3/docs/New-XAzResourceGroupDeployment.md)
+
+Creates (or updates) a resource deployment under the resource group specified by the `ContainerRegistryName` parameter. 

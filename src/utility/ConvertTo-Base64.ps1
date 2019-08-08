@@ -7,26 +7,6 @@ New-Alias `
 
 function ConvertTo-Base64 {
     
-    <#
-    .SYNOPSIS
-    Streams file content into the GNU base64 executeable that is bundled with Git.
-    
-    .DESCRIPTION
-    Long description
-    
-    .PARAMETER Path
-    Parameter description
-    
-    .EXAMPLE
-    [string]$KeyContent = ConvertTo-Base64 -Path $(Resolve-Path -Path $SslKeyPath)
-
-    Noticed that the variable is casted to string. That is deliberate since if it was going to be piped
-    some bad mojo happens.
-    
-    .NOTES
-    General notes
-    #>
-    
     [CmdletBinding(
         DefaultParameterSetName = "ByPipeline",
         PositionalBinding = $true
