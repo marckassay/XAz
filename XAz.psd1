@@ -69,9 +69,18 @@
     # NestedModules = @()
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-    FunctionsToExport = @('ConvertTo-Base64', 'Get-XAzRegistryCredentials', 
-        'Invoke-AzureCLIDownload', 'New-SelfSignedCert', 
-        'New-XAzResourceGroupDeployment')
+    FunctionsToExport = @(
+        'Approve-XAzDomainName',
+        'Approve-XAzRegistryName',
+        'Connect-XAzAccount',
+        'ConvertTo-Base64',
+        'Get-XAzContainerRegistryTags',
+        'Get-XAzRegistryCredentials',
+        'Invoke-AzureCLIDownload',
+        'New-SelfSignedCert',
+        'New-Storage',
+        'New-XAzResourceGroupDeployment'
+    )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     CmdletsToExport   = @()
@@ -131,4 +140,5 @@
     # DefaultCommandPrefix = ''
 
 }
+
 

@@ -29,11 +29,16 @@ New-XAzResourceGroupDeployment [-TemplateParameterObject <Hashtable>] [-Containe
 ## DESCRIPTION
 Before calling this function, the PS session must have a current Azure session. Check by verifying that Get-AzSubscription returns a value. The `$ContainerRegistryName` parameter specifies which Resource Group to use by name from the current Azure subscription.
 
+This function cannot overwrite on existing deployment under some or perhaps all conditions. Some invocation may receive the following output:
+
+"The updates on container group '< $Name >' are invalid. If you are going to update the os type, restart policy, network profile, CPU, memory or GPU resources for a container group, you must delete it first and then create a new one."
+
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+Get-DeploymentTemplateObject -SslKeyPath 'C:\Documents\orldata\ssl.key' | `
+>> New-XAzResourceGroupDeployment -ContainerRegistryName orldataContainerRegistry -Image orldata/prod:0.0.1 -TemplateName deploy-orldata-ssl.json -Name orldata-deploygroup
 ```
 
 {{ Add example description here }}

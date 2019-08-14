@@ -30,7 +30,7 @@ function New-XAzResourceGroupDeployment {
         [Parameter(
             Mandatory = $true,
             HelpMessage = "The resource group names available from the current Azure subscription.",
-            Position = 1
+            Position = 0
         )]
         [string]$ContainerRegistryName,
 
@@ -38,7 +38,7 @@ function New-XAzResourceGroupDeployment {
             Mandatory = $true,
             HelpMessage = "The image in the container registry. This defined set is determined by the 
             ContainerRegistryName parameter.",
-            Position = 2
+            Position = 1
         )]
         [string]$Image,
 
@@ -46,7 +46,7 @@ function New-XAzResourceGroupDeployment {
             Mandatory = $true,
             ParameterSetName = "ByTemplateName",
             HelpMessage = "The file names of Json files located in the `${PWD}/build/templates` folder.",
-            Position = 3
+            Position = 2
         )]
         [string]$TemplateName,
 
@@ -54,7 +54,7 @@ function New-XAzResourceGroupDeployment {
             Mandatory = $true,
             ParameterSetName = "ByTemplateFile",
             HelpMessage = "The location of a Template file.",
-            Position = 3
+            Position = 2
         )]
         [string]$TemplateFile,
 
@@ -62,13 +62,13 @@ function New-XAzResourceGroupDeployment {
             Mandatory = $false,
             HelpMessage = "Specifies the name of the resource group deployment to create. A name 
             will be generated if one isn't given.",
-            Position = 4
+            Position = 3
         )]
         [string]$Name,
 
         [Parameter(
             Mandatory = $false,
-            Position = 5
+            Position = 4
         )]
         [ValidateSet("Incremental", "Complete")]
         [string]$Mode = "Incremental",
@@ -127,7 +127,9 @@ function New-XAzResourceGroupDeployment {
 
     end {
 
-        Write-Warning @"
+        if ($WhatIf.IsPresent -eq $false) {
+
+            Write-Warning @"
 Scalar parameters to be used: 
 $($CommandParameterObject | Format-Table | Out-String)
 And TemplateParameterObject:
@@ -136,15 +138,12 @@ $($TemplateParameterObject | Format-Table | Out-String -Width 100)
 You are about to execute New-AzResourceGroupDeployment command with the above values.
 "@ -WarningAction Inquire
 
-        if ($WhatIf.IsPresent -eq $false) {
-
             New-AzResourceGroupDeployment `
                 @CommandParameterObject `
                 -TemplateParameterObject $TemplateParameterObject
-
         }
         else {
-          
+
             Test-AzResourceGroupDeployment `
                 -ResourceGroupName $ImageRegistryCredentials.ResourceGroupName `
                 -TemplateFile $TemplateFile `

@@ -13,7 +13,7 @@ function Get-XAzRegistryCredentials {
     param(
         [Parameter(
             Mandatory = $true,
-            HelpMessage = "The resource group names available from the current Azure subscription.",
+            HelpMessage = "The container registry names available from the current Azure subscription.",
             Position = 1
         )]
         [string]$ContainerRegistryName
@@ -23,19 +23,26 @@ function Get-XAzRegistryCredentials {
         $PrivateCR = Get-AzContainerRegistry | Where-Object `
             -FilterScript { $_.Name -eq $ContainerRegistryName }
 
-        $PrivateCRCreds = Get-AzContainerRegistryCredential `
-            -Registry $PrivateCR
+        if ($PrivateCR) {
+            $PrivateCRCreds = Get-AzContainerRegistryCredential `
+                -Registry $PrivateCR
+        }
     }
     
     end {
-        # dont add 'password2' field on this object since it will fail the deployment
-        @{
-            ResourceGroupName = $PrivateCR.ResourceGroupName
-            Image             = @(@{
-                    server   = $PrivateCR.LoginServer
-                    username = $PrivateCRCreds.Username
-                    password = $PrivateCRCreds.Password
-                })
+        if ($PrivateCR) {
+            # dont add 'password2' field on this object since it will fail the deployment
+            @{
+                ResourceGroupName = $PrivateCR.ResourceGroupName
+                Image             = @(@{
+                        server   = $PrivateCR.LoginServer
+                        username = $PrivateCRCreds.Username
+                        password = $PrivateCRCreds.Password
+                    })
+            }
+        }
+        else {
+            Write-Warning "Unable to get credentials for '$ContainerRegistryName'"
         }
     }
 }

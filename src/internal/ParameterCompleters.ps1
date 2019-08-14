@@ -47,4 +47,14 @@ $TemplateNameCompleter = {
     return Get-Item .\build\templates\* -Include *.json | Select-Object -ExpandProperty Name
 }
 
-Export-ModuleMember -Variable ContainerRegistryNameCompleter, ImageCompleter, TemplateNameCompleter
+$ResourceGroupNameCompleter = {
+    param ( 
+        $commandName,
+        $parameterName,
+        $wordToComplete,
+        $commandAst,
+        $fakeBoundParameters
+    )
+    
+    return Get-AzResourceGroup | Select-Object -ExpandProperty ResourceGroupName
+}
