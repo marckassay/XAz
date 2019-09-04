@@ -31,7 +31,7 @@ function Connect-XAzAccount {
         }
 
         if ($PassThru.IsPresent) {
-            $IsConnected
+            $CurrentSubscription
         }
     }
 }

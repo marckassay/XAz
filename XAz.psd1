@@ -76,6 +76,7 @@
         'ConvertTo-Base64',
         'Get-XAzContainerRegistryTags',
         'Get-XAzRegistryCredentials',
+        'Get-XAzTemplateParameterObject',
         'Invoke-AzureCLIDownload',
         'New-SelfSignedCert',
         'New-Storage',
