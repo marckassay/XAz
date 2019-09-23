@@ -37,6 +37,10 @@ function Get-XAzTemplateParameterObject {
 
         if ($TemplateParameters) {
             Write-Verbose "Loaded file successfully"
+            $TemplateParameters
+        }
+        else {
+            $null
         }
     }
 }

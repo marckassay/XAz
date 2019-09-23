@@ -1,8 +1,10 @@
 using module .\src\account\Connect-XAzAccount.ps1
 using module .\src\deployment\New-XAzResourceGroupDeployment.ps1
+using module .\src\internal\Read-Confirmation.ps1
 using module .\src\registry\Approve-XAzRegistryName.ps1
 using module .\src\registry\Get-XAzContainerRegistryTags.ps1
 using module .\src\registry\Get-XAzRegistryCredentials.ps1
+using module .\src\resources\Confirm-XAzResourceGroup.ps1
 using module .\src\resources\Get-XAzTemplateParameterObject.ps1
 using module .\src\security\New-SelfSignedCert.ps1
 using module .\src\storage\New-Storage.ps1
