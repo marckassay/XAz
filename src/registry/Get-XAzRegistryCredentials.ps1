@@ -20,6 +20,10 @@ function Get-XAzRegistryCredentials {
     )
 
     begin {
+        if (-not $PSBoundParameters.ContainsKey('Verbose')) {
+            $VerbosePreference = $PSCmdlet.GetVariableValue('VerbosePreference')
+        }
+        
         $PrivateCR = Get-AzContainerRegistry | Where-Object `
             -FilterScript { $_.Name -eq $ContainerRegistryName }
 

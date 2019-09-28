@@ -58,6 +58,10 @@ function Get-XAzContainerRegistryTags {
     }
     #>
     begin {
+        if (-not $PSBoundParameters.ContainsKey('Verbose')) {
+            $VerbosePreference = $PSCmdlet.GetVariableValue('VerbosePreference')
+        }
+        
         Get-AzContainerRegistry -ResourceGroupName $ResourceGroup | Select-Object -ExpandProperty Name
 
         az acr repository list -n orldataContainerRegistry

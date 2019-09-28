@@ -10,6 +10,7 @@ using module .\src\security\New-SelfSignedCert.ps1
 using module .\src\storage\New-Storage.ps1
 using module .\src\utility\ConvertTo-Base64.ps1
 using module .\src\utility\Invoke-AzureCLIDownload.ps1
+using module .\src\utility\Write-StepMessage.ps1
 using module .\src\webapp\Approve-XAzDomainName.ps1
 
 Param(
