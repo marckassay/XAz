@@ -42,7 +42,7 @@ function Approve-XAzRegistryName {
                 else {
                     Write-Warning "Container registry name '$Name', is not available for use."
                     $Name = $null
-                    $Name = Read-Host "Try again. Enter a different name"
+                    $Name = Read-Host "Enter a different name for container registry"
                 }
             } until ($IsContainerRegistryNameAvailable -eq $true)
         }

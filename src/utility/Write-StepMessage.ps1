@@ -26,6 +26,7 @@ function Write-StepMessage {
     }
     
     end {
-        Write-Verbose "Step $CurrentStep out of $TotalSteps steps completed"   
+        Write-Verbose "Step $CurrentStep out of $TotalSteps steps completed"
+        Write-Verbose ""
     }
 }

@@ -40,7 +40,7 @@ function Approve-XAzDomainName {
             else {
                 Write-Warning "Sub-domain, '$Name' is not available for use."
                 $Name = $null
-                $Name = Read-Host "Try again. Enter a different name"
+                $Name = Read-Host "Enter a different name for sub-domain"
             }
         } until ($IsHostNameAvailableForUse -eq $true)
     }

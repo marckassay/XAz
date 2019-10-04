@@ -19,8 +19,9 @@ function Confirm-XAzResourceGroup {
             Position = 1
         )]
         [ValidateNotNull()]
-        [string]$Location
-
+        [string]$Location,
+        
+        [switch]$Prompt
     )
 
     begin {
@@ -38,29 +39,32 @@ function Confirm-XAzResourceGroup {
 
         if ($IsExisting -eq $false) {
             Write-Warning "Resource group was not found. This is needed to continue."
-            $CreateResourceGroup = Read-Confirmation "Do you want to create it under current subscription?"
-                
+
+            if ($Prompt.IsPresent -eq $true) {
+                $CreateResourceGroup = Read-Confirmation "Do you want to create it under current subscription?"
+            }
+            
             if ($CreateResourceGroup) {
                 $CreationResults = New-AzResourceGroup -Name $Name -Location $Location -Verbose -OutVariable ResourceGroup
-                if ($CreationResults.ProvisioningState -ne 'Succeeded') {
-                    $CreationResults = $null
-                }
-                else {
-                    $IsExisting = $true
-                }
+                $IsExisting = ($CreationResults.ProvisioningState -eq 'Succeeded')
             }
             else {
-                $CreationResults = $null
+                $IsExisting = $false
             }
-        }
-
-        if (($IsExisting -eq $false) -and ($null -eq $CreationResults)) {
-            Write-Error "Wasn't able to create required resource group"
-            $null
         }
         else {
             Write-Verbose "Verified resource group exist"
             $ResourceGroup.ResourceId
+        }
+
+        # post Write-Warning procedures
+        if ($IsExisting -eq $true) {
+            Write-Verbose "Created and verified resource group"
+            $ResourceGroup.ResourceId
+        }
+        else {
+            Write-Error "Wasn't able to create required resource group"
+            $null
         }
     }
 }

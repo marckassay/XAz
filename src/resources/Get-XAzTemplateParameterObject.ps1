@@ -32,7 +32,7 @@ function Get-XAzTemplateParameterObject {
 
         # we only care about the parameters object of this file; hence last command
         $TemplateParameters = $ParameterContent | `
-            ConvertFrom-Json -Depth 5 -AsHashtable | `
+            ConvertFrom-Json -Depth 10 -AsHashtable | `
             Select-Object -ExpandProperty parameters
 
         if ($TemplateParameters) {
