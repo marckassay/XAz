@@ -1,5 +1,4 @@
 using module .\src\account\Connect-XAzAccount.ps1
-using module .\src\deployment\New-XAzResourceGroupDeployment.ps1
 using module .\src\internal\Read-Confirmation.ps1
 using module .\src\registry\Approve-XAzRegistryName.ps1
 using module .\src\registry\Get-XAzContainerRegistryTags.ps1

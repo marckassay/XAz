@@ -10,7 +10,8 @@ $ContainerRegistryNameCompleter = {
     return Get-AzContainerRegistry | Select-Object -ExpandProperty Name
 }
 
-$ImageCompleter = {
+# TODO: contains a module dependency
+<# $ImageCompleter = {
     param ( 
         $commandName,
         $parameterName,
@@ -34,7 +35,7 @@ $ImageCompleter = {
         $possibleValues.Values | ForEach-Object { $_ }
     }
 }
-
+ #>
 $TemplateNameCompleter = {
     param ( 
         $commandName,
