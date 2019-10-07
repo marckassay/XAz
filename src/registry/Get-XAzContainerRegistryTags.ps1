@@ -24,6 +24,7 @@ function Get-XAzContainerRegistryTags {
         Write-Progress -Activity "Searching for repositories and tags in the registry of: $ContainerRegistryName" -Id $ProgessId
 
         $Images = @()
+        # TODO: would be nice to have this PS module not depend on az CLI. 
         az acr repository list -n $ContainerRegistryName | `
             ConvertFrom-Json | `
             ForEach-Object {
