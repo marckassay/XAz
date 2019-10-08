@@ -33,7 +33,7 @@
     Description          = 'XAz is a collection of PowerShell Core scripts to interface with Azure PowerShell module and Azure CLI.'
 
     # Minimum version of the PowerShell engine required by this module
-    # PowerShellVersion = ''
+    PowerShellVersion = '6.2'
 
     # Name of the PowerShell host required by this module
     # PowerShellHostName = ''
