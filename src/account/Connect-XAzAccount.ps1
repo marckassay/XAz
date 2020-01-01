@@ -1,5 +1,8 @@
 function Connect-XAzAccount {
     [CmdletBinding()]
+    [OutputType(
+        [pscustomobject]
+    )]
     Param(
         [switch]$PassThru
     )
@@ -12,26 +15,30 @@ function Connect-XAzAccount {
     
     end {
         
-        Write-Verbose "Checking for a connected Azure session"
-        $IsConnected = Get-AzSubscription -ErrorAction SilentlyContinue -OutVariable CurrentSubscription | `
+        Write-Verbose "Checking for an Azure context"
+        
+        $IsConnected = Get-AzContext -ErrorAction SilentlyContinue -OutVariable SelectedContext | `
             Measure-Object | `
-            ForEach-Object { $($_.Count -eq 1) }
+            ForEach-Object { $($_.Count -ge 1) }
         
         if ($IsConnected -eq $false) {
-            $IsConnected = Connect-AzAccount -Confirm -OutVariable CurrentSubscription | `
+            $IsConnected = Connect-AzAccount -Confirm -OutVariable SelectedContext | `
                 Measure-Object | `
-                ForEach-Object { $($_.Count -eq 1) }
+                ForEach-Object { $($_.Count -ge 1) }
         }
         
         if ($IsConnected -eq $true) {
-            Write-Verbose "Connected to Azure with the following subscription: $($CurrentSubscription.SubscriptionId)"
+            Write-Verbose @"
+The selected Azure context will be used: 
+$SelectedContext
+"@
         }
         else {
-            Write-Error "Unabled to connect with Azure."
+            Write-Error "Unabled to select an Azure context."
         }
 
         if ($PassThru.IsPresent) {
-            $CurrentSubscription
+            $SelectedContext
         }
     }
 }

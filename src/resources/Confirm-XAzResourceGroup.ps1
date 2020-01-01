@@ -4,7 +4,7 @@ function Confirm-XAzResourceGroup {
         PositionalBinding = $true
     )]
     [OutputType(
-        [hashtable]
+        [pscustomobject]
     )]
     Param(
         [Parameter(
@@ -33,6 +33,7 @@ function Confirm-XAzResourceGroup {
     end {
         Write-Verbose "Checking for resource group: $Name"
 
+        $RequiredCreation = $false
         $IsExisting = Get-AzResourceGroup -Name $Name -ErrorAction SilentlyContinue -OutVariable ResourceGroup | `
             Measure-Object | `
             ForEach-Object { $($_.Count -eq 1) }
@@ -41,30 +42,48 @@ function Confirm-XAzResourceGroup {
             Write-Warning "Resource group was not found. This is needed to continue."
 
             if ($Prompt.IsPresent -eq $true) {
-                $CreateResourceGroup = Read-Confirmation "Do you want to create it under current subscription?"
+                $CreateResourceGroup = Read-Confirmation "Do you want to create it now under current subscription?"
             }
             
             if ($CreateResourceGroup) {
                 $CreationResults = New-AzResourceGroup -Name $Name -Location $Location -Verbose -OutVariable ResourceGroup
                 $IsExisting = ($CreationResults.ProvisioningState -eq 'Succeeded')
+                $RequiredCreation = $true
             }
             else {
                 $IsExisting = $false
             }
         }
         else {
-            Write-Verbose "Verified resource group exist"
-            $ResourceGroup.ResourceId
+            Write-Verbose "Verified resource group existence"
         }
 
         # post Write-Warning procedures
         if ($IsExisting -eq $true) {
-            Write-Verbose "Created and verified resource group"
-            $ResourceGroup.ResourceId
+            
+            if ($RequiredCreation) {
+                $Msg = "Created and verified resource group existence"
+            }
+            else {
+                $Msg = "Verified resource group existence"
+            }
+
+            Write-Verbose $Msg
+            
+            [pscustomobject]@{
+                Id               = $ResourceGroup.ResourceId
+                Name             = $Name
+                RequiredCreation = $RequiredCreation
+            }
         }
         else {
             Write-Error "Wasn't able to create required resource group"
-            $null
+            
+            [pscustomobject]@{
+                Id               = ''
+                Name             = $Name
+                RequiredCreation = $false
+            }
         }
     }
 }

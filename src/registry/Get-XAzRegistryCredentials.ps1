@@ -10,6 +10,9 @@ function Get-XAzRegistryCredentials {
     [CmdletBinding(
         PositionalBinding = $true
     )]
+    [OutputType(
+        [pscustomobject]
+    )]
     param(
         [Parameter(
             Mandatory = $true,
@@ -36,7 +39,7 @@ function Get-XAzRegistryCredentials {
     end {
         if ($PrivateCR) {
             # dont add 'password2' field on this object since it will fail the deployment
-            @{
+            [pscustomobject]@{
                 ResourceGroupName = $PrivateCR.ResourceGroupName
                 Image             = @(@{
                         server   = $PrivateCR.LoginServer
@@ -47,6 +50,10 @@ function Get-XAzRegistryCredentials {
         }
         else {
             Write-Warning "Unable to get credentials for '$ContainerRegistryName'"
+            [pscustomobject]@{
+                ResourceGroupName = $null
+                Image             = $null
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 
-function Get-XAzTemplateParameterObject {
+function Get-XAzTemplateObject {
 
     [CmdletBinding(
         PositionalBinding = $true
@@ -30,10 +30,8 @@ function Get-XAzTemplateParameterObject {
 
         Write-Verbose "Converting json file into object"
 
-        # we only care about the parameters object of this file; hence last command
         $TemplateParameters = $ParameterContent | `
-            ConvertFrom-Json -Depth 10 -AsHashtable | `
-            Select-Object -ExpandProperty parameters
+            ConvertFrom-Json -Depth 10 -AsHashtable
 
         if ($TemplateParameters) {
             Write-Verbose "Loaded file successfully"

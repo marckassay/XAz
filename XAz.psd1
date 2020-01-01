@@ -33,7 +33,7 @@
     Description          = 'XAz is a collection of PowerShell Core scripts to interface with Azure PowerShell module and Azure CLI.'
 
     # Minimum version of the PowerShell engine required by this module
-    PowerShellVersion = '6.2'
+    PowerShellVersion    = '6.2'
 
     # Name of the PowerShell host required by this module
     # PowerShellHostName = ''
@@ -69,16 +69,16 @@
     # NestedModules = @()
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-    FunctionsToExport    = 'Approve-XAzDomainName', 'Approve-XAzRegistryName', 'Confirm-XAzResourceGroup', 'Connect-XAzAccount', 'Get-XAzContainerRegistryTags', 'Get-XAzRegistryCredentials', 'Get-XAzTemplateParameterObject', 'Read-Confirmation', 'Write-StepMessage'
+    FunctionsToExport    = 'Approve-XAzDomainName', 'Approve-XAzRegistryName', 'Confirm-XAzResourceGroup', 'Connect-XAzAccount', 'Get-XAzContainerRegistryTags', 'Get-XAzRegistryCredentials', 'Get-XAzTemplateObject', 'Read-Confirmation', 'Write-StepMessage', 'Set-StepMessage'
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-    CmdletsToExport      = '*'
+    CmdletsToExport      = ''
 
     # Variables to export from this module
     VariablesToExport    = '*'
 
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-    AliasesToExport      = '*'
+    AliasesToExport      = ''
 
     # DSC resources to export from this module
     # DscResourcesToExport = @()

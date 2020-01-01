@@ -4,16 +4,23 @@ function Approve-XAzRegistryName {
     [CmdletBinding(
         PositionalBinding = $true
     )]
+    [OutputType(
+        [pscustomobject]
+    )]
     param(
         [Parameter(
             Mandatory = $true,
-            HelpMessage = "The proposed container registry name.",
+            HelpMessage = "The resource group of where the proposed container registry will reside.",
             Position = 0
         )]
-        [AllowNull()]
-        [string]$Name,
+        [string]$ResourceGroupName,
 
-        [switch]$AcceptExisting
+        [Parameter(
+            Mandatory = $true,
+            HelpMessage = "The proposed container registry name.",
+            Position = 1
+        )]
+        [string]$Name
     )
 
     begin {
@@ -23,16 +30,15 @@ function Approve-XAzRegistryName {
         
         Write-Verbose "Checking availability of container registry name"
 
-        $AlreadyExists = Get-XAzRegistryCredentials -ContainerRegistryName $Name -WarningAction SilentlyContinue | `
+        $IsContainerRegistryNameAvailable = $false
+        $Dirty = $false
+        $AlreadyCreatedUnderResourceGroup = Get-AzContainerRegistry -ResourceGroupName $ResourceGroupName | `
+            Select-Object -ExpandProperty Name | `
+            Where-Object { $_ -eq $Name } | `
             Measure-Object | `
             ForEach-Object { $($_.Count -eq 1) }
 
-        if (($AcceptExisting.IsPresent -eq $true) -and ($AlreadyExists -eq $true)) {
-            $NameAsIs = $Name
-        }
-        else {
-            [boolean]$IsContainerRegistryNameAvailable = $false
-
+        if ($AlreadyCreatedUnderResourceGroup -eq $false) {
             do {
                 $IsContainerRegistryNameAvailable = Test-AzContainerRegistryNameAvailability -Name $Name | `
                     Select-Object -ExpandProperty NameAvailable
@@ -42,6 +48,7 @@ function Approve-XAzRegistryName {
                 else {
                     Write-Warning "Container registry name '$Name', is not available for use."
                     $Name = $null
+                    $Dirty = $true
                     $Name = Read-Host "Enter a different name for container registry"
                 }
             } until ($IsContainerRegistryNameAvailable -eq $true)
@@ -49,18 +56,27 @@ function Approve-XAzRegistryName {
     }
     
     end {
-        # $NameAsIs is set only when AcceptExisting is switched and a container registry exists with
-        # this name. If this is the case, then the $Name will be returned 'as-is' (without changes)
-        if ($null -ne $NameAsIs) {
-            Write-Verbose "Found exisiting container registry name"
-            $NameAsIs
+        if ($AlreadyCreatedUnderResourceGroup -eq $true) {
+            Write-Verbose "Found exisiting container registry name under resource group specified"
+            $Approved = $true
+            $Available = $false
         }
-        elseif ($null -ne $Name) {
-            Write-Verbose "Checked and verified availability of container registry name of: $Name"
-            $Name
+        elseif ($IsContainerRegistryNameAvailable -eq $true) {
+            Write-Verbose "Approved availability of container registry name of: $Name"
+            $Approved = $true
+            $Available = $true
         }
         else {
-            Write-Error "Unable to verify container registry name is availabile."
+            Write-Error "Unable to approved container registry name."
+            $Approved = $false
+            $Available = $false
+        }
+
+        [pscustomobject]@{
+            Name      = $Name
+            Available = $Available
+            Approved  = $Approved
+            Dirty     = $Dirty
         }
     }
 }
