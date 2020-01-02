@@ -59,3 +59,53 @@ $ResourceGroupNameCompleter = {
     
     return Get-AzResourceGroup | Select-Object -ExpandProperty ResourceGroupName
 }
+
+$StoreNamesCompleter = {
+    param ( 
+        $commandName,
+        $parameterName,
+        $wordToComplete,
+        $commandAst,
+        $fakeBoundParameters
+    )
+
+    return [System.Security.Cryptography.X509Certificates.StoreName].GetEnumNames()
+}
+
+$StoreLocationsCompleter = {
+    param ( 
+        $commandName,
+        $parameterName,
+        $wordToComplete,
+        $commandAst,
+        $fakeBoundParameters
+    )
+
+    return [System.Security.Cryptography.X509Certificates.StoreLocation].GetEnumNames()
+}
+
+$OpenPoliciesCompleter = {
+    param ( 
+        $commandName,
+        $parameterName,
+        $wordToComplete,
+        $commandAst,
+        $fakeBoundParameters
+    )
+
+    return [System.Security.Cryptography.X509Certificates.OpenFlags].GetEnumNames()
+}
+
+$FindByTypesCompleter = {
+    param ( 
+        $commandName,
+        $parameterName,
+        $wordToComplete,
+        $commandAst,
+        $fakeBoundParameters
+    )
+
+    $arr = [System.Security.Cryptography.X509Certificates.X509FindType].GetEnumNames()
+    $set = New-Object -TypeName 'System.Collections.Generic.HashSet[string]' -ArgumentList (, [string[]]$arr)
+    return $set
+}

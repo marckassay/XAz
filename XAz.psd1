@@ -12,7 +12,7 @@
     RootModule           = 'XAz.psm1'
 
     # Version number of this module.
-    ModuleVersion        = '1.0.1'
+    ModuleVersion        = '1.0.2'
 
     # Supported PSEditions
     CompatiblePSEditions = @('Core')
@@ -69,7 +69,25 @@
     # NestedModules = @()
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-    FunctionsToExport    = 'Approve-XAzDomainName', 'Approve-XAzRegistryName', 'Confirm-XAzResourceGroup', 'Connect-XAzAccount', 'Get-XAzContainerRegistryTags', 'Get-XAzRegistryCredentials', 'Get-XAzTemplateObject', 'Read-Confirmation', 'Write-StepMessage', 'Set-StepMessage'
+    FunctionsToExport = @(
+        'Approve-XAzDomainName',
+        'Approve-XAzRegistryName',
+        'Close-X509Store',
+        'Confirm-XAzResourceGroup',
+        'Connect-XAzAccount',
+        'ConvertTo-PEMCertificate',
+        'Export-X509Certificate',
+        'Get-PEMCertFromStore',
+        'Get-XAzContainerRegistryTags',
+        'Get-XAzRegistryCredentials',
+        'Get-XAzTemplateObject',
+        'Import-X509Certificate',
+        'Invoke-AzureCLIDownload',
+        'Open-X509Store',
+        'Read-Confirmation',
+        'Set-StepMessage',
+        'Write-StepMessage'
+    )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     CmdletsToExport      = ''
@@ -98,7 +116,7 @@
             # Tags = @()
 
             # A URL to the license for this module.
-            LicenseUri = 'https://raw.githubusercontent.com/marckassay/XAz/1.0.1/LICENSE'
+            LicenseUri = 'https://raw.githubusercontent.com/marckassay/XAz/1.0.2/LICENSE'
 
             # A URL to the main website for this project.
             ProjectUri = 'https://github.com/marckassay/XAz'
@@ -114,7 +132,7 @@
     } # End of PrivateData hashtable
 
     # HelpInfo URI of this module
-    HelpInfoURI          = 'https://github.com/marckassay/XAz/tree/1.0.1'
+    HelpInfoURI          = 'https://github.com/marckassay/XAz/tree/1.0.2'
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''

@@ -1,5 +1,10 @@
+using module .\src\account\certificate\Close-X509Store.ps1
+using module .\src\account\certificate\ConvertTo-PEMCertificate.ps1
+using module .\src\account\certificate\Export-X509Certificate.ps1
+using module .\src\account\certificate\Get-PEMCertFromStore.ps1
+using module .\src\account\certificate\Import-X509Certificate.ps1
+using module .\src\account\certificate\Open-X509Store.ps1
 using module .\src\account\Connect-XAzAccount.ps1
-using module .\src\internal\ParameterCompleters.ps1
 using module .\src\internal\Read-Confirmation.ps1
 using module .\src\registry\Approve-XAzRegistryName.ps1
 using module .\src\registry\Get-XAzContainerRegistryTags.ps1
@@ -20,6 +25,8 @@ $script:SUT = $SUT
 $script:XAzTotalSteps = 0
 $script:XAzCurrentStep = 0
 $script:XAzShowElapsedTime = $null
+
+$script:X509Store = $null
 
 if ($script:SUT -eq $False) {
     # Start-Module
