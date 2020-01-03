@@ -71,6 +71,6 @@ function Get-PEMCertFromStore {
 
         Close-X509Store
         
-        $TempFile.FullName
+        $TempFile
     }
 }

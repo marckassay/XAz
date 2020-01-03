@@ -105,7 +105,5 @@ $FindByTypesCompleter = {
         $fakeBoundParameters
     )
 
-    $arr = [System.Security.Cryptography.X509Certificates.X509FindType].GetEnumNames()
-    $set = New-Object -TypeName 'System.Collections.Generic.HashSet[string]' -ArgumentList (, [string[]]$arr)
-    return $set
+    return [System.Security.Cryptography.X509Certificates.X509FindType].GetEnumNames()
 }

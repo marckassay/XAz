@@ -78,6 +78,7 @@
         'ConvertTo-PEMCertificate',
         'Export-X509Certificate',
         'Get-PEMCertFromStore',
+        'Get-X509CertificateList',
         'Get-XAzContainerRegistryTags',
         'Get-XAzRegistryCredentials',
         'Get-XAzTemplateObject',

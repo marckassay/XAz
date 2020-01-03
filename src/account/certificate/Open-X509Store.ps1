@@ -43,6 +43,9 @@ function Open-X509Store {
     )
 
     end {
+        
+        Close-X509Store
+        
         $script:X509Store = [System.Security.Cryptography.X509Certificates.X509Store]::new($StoreName, $StoreLocation)
         $script:X509Store.Open($OpenPolicy)
     }
