@@ -26,8 +26,17 @@ function Export-X509Certificate {
     )
     
     end {
-        if (($null -ne $script:X509Store) -and ($script:X509Store.IsOpen -eq $true)) {
-            $script:X509Store.Certificates.Find($FindBy, $Value, $false);
+        $CloseAfter = $false
+
+        if (($null -eq $script:X509Store) -or ($script:X509Store.IsOpen -eq $false)) {
+            $CloseAfter = $true
+            Open-X509Store
+        }
+
+        $script:X509Store.Certificates.Find($FindBy, $Value, $false);
+
+        if ($CloseAfter -eq $true) {
+            Close-X509Store
         }
     }
 }

@@ -4,7 +4,7 @@ function Import-X509Certificate {
     param(
         [Parameter(
             Mandatory = $true,
-            HelpMessage = "The location of PEM file.",
+            HelpMessage = "The location of PKCS12 file.",
             Position = 1
         )]
         [string]$Path,
@@ -21,25 +21,39 @@ function Import-X509Certificate {
     )
 
     end {
-        if (($null -ne $script:X509Store) -and ($script:X509Store.IsOpen -eq $true)) {
+        $CloseAfter = $false
 
-            if ($CredentialPrompt.IsPresent -eq $true) {
-                $Credential = Get-Credential -Message "Provide certificate's CommonName and Passphrase"
-            }
-            [byte[]]$CertContentBytes = Get-Content $Path -AsByteStream
-            
-            # TODO: add to parameters
-            $Flags = [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::Exportable,
-            [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::MachineKeySet, [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::PersistKeySet
+        # if store isn't set or open...open it and then close it after adding certificate
+        # else, leave store opened
+        if (($null -eq $script:X509Store) -or ($script:X509Store.IsOpen -eq $false)) {
+            $CloseAfter = $true
+            Open-X509Store
+        }
+
+        if ($CredentialPrompt.IsPresent -eq $true) {
+            $Credential = Get-Credential -Message "Provide certificate's CommonName and Passphrase"
+        }
         
-            if ($null -eq $Credential) {
-                $Certificate = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($CertContentBytes, '', $Flags)
-            }
-            else {
-                $Certificate = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($CertContentBytes, $Credential, $Flags)
-            }
+        [byte[]]$CertContentBytes = Get-Content $Path -AsByteStream
+            
+        # TODO: add to parameters
+        $Flags = @(
+            [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::Exportable,
+            [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::MachineKeySet,
+            [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::PersistKeySet
+        )
 
-            $script:X509Store.Add($Certificate)
+        if ($null -eq $Credential) {
+            $Certificate = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($CertContentBytes, '', $Flags)
+        }
+        else {
+            $Certificate = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($CertContentBytes, $Credential, $Flags)
+        }
+
+        $script:X509Store.Add($Certificate)
+
+        if ($CloseAfter -eq $true) {
+            Close-X509Store
         }
     }
 }
