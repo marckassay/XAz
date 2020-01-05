@@ -84,6 +84,7 @@
         'Get-XAzTemplateObject',
         'Import-X509Certificate',
         'Invoke-AzureCLIDownload',
+        'New-SelfSignedCert',
         'Open-X509Store',
         'Read-Confirmation',
         'Set-StepMessage',

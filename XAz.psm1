@@ -4,6 +4,7 @@ using module .\src\account\certificate\Export-X509Certificate.ps1
 using module .\src\account\certificate\Get-PEMCertFromStore.ps1
 using module .\src\account\certificate\Get-X509CertificateList.ps1
 using module .\src\account\certificate\Import-X509Certificate.ps1
+using module .\src\account\certificate\New-SelfSignedCert.ps1
 using module .\src\account\certificate\Open-X509Store.ps1
 using module .\src\account\Connect-XAzAccount.ps1
 using module .\src\internal\Read-Confirmation.ps1
