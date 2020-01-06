@@ -39,13 +39,16 @@ function Open-X509Store {
             HelpMessage = "The OpenFlags enum member of X509Certificates.",
             Position = 3
         )]
-        [string]$OpenPolicy = 'ReadWrite'
+        [string]$OpenPolicy = 'MaxAllowed'
     )
 
     end {
-        Close-X509Store
         
-        $script:X509Store = [System.Security.Cryptography.X509Certificates.X509Store]::new($StoreName, $StoreLocation)
-        $script:X509Store.Open($OpenPolicy)
+        Close-X509Store
+
+        if ($null -eq $script:X509Store ) {
+            $script:X509Store = [System.Security.Cryptography.X509Certificates.X509Store]::new($StoreName, $StoreLocation)
+            $script:X509Store.Open($OpenPolicy)
+        }
     }
 }

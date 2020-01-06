@@ -1,5 +1,5 @@
 
-function Get-X509CertificateList {
+function Get-X509Certificates {
     [CmdletBinding()]
     Param(
 
@@ -13,7 +13,9 @@ function Get-X509CertificateList {
             Open-X509Store
         }
 
-        $script:X509Store.Certificates | Format-Table -AutoSize -Property Thumbprint, Subject
+        if ($script:X509Store.Certificates) {
+            $script:X509Store.Certificates.GetEnumerator()
+        }
     
         if ($CloseAfter -eq $true) {
             Close-X509Store

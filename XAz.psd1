@@ -78,7 +78,7 @@
         'ConvertTo-PEMCertificate',
         'Export-X509Certificate',
         'Get-PEMCertFromStore',
-        'Get-X509CertificateList',
+        'Get-X509Certificates',
         'Get-XAzContainerRegistryTags',
         'Get-XAzRegistryCredentials',
         'Get-XAzTemplateObject',
@@ -87,6 +87,7 @@
         'New-SelfSignedCert',
         'Open-X509Store',
         'Read-Confirmation',
+        'Remove-X509Certificate',
         'Set-StepMessage',
         'Write-StepMessage'
     )

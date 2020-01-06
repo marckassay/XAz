@@ -1,16 +1,16 @@
 using module .\..\..\internal\ParameterCompleters.ps1
 
 Register-ArgumentCompleter `
-    -CommandName Export-X509Certificate `
+    -CommandName Remove-X509Certificate `
     -ParameterName FindBy `
     -ScriptBlock $FindByTypesCompleter
 
 Register-ArgumentCompleter `
-    -CommandName Export-X509Certificate `
+    -CommandName Remove-X509Certificate `
     -ParameterName Value `
     -ScriptBlock $CertValueCompleter
-
-function Export-X509Certificate {
+    
+function Remove-X509Certificate {
     [CmdletBinding(
         PositionalBinding = $false
     )]
@@ -31,7 +31,7 @@ function Export-X509Certificate {
     )
     
     end {
-        $FindBy = "FindBy"
+        $FindBy = "FindBy$FindBy"
         $CloseAfter = $false
 
         if (($null -eq $script:X509Store) -or ($script:X509Store.IsOpen -eq $false)) {
@@ -39,7 +39,11 @@ function Export-X509Certificate {
             Open-X509Store
         }
 
-        $script:X509Store.Certificates.Find($FindBy, $Value, $false);
+        $Certificate = Export-X509Certificate -FindBy $FindBy -Value $Value
+        
+        $Certificate | Format-Table -AutoSize -Expand Both
+        Write-Warning -Message "The certificate from Credential Management will be removed if you accept?" -WarningAction Inquire
+        $script:X509Store.Remove($Certificate)
 
         if ($CloseAfter -eq $true) {
             Close-X509Store

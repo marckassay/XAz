@@ -1,4 +1,4 @@
-Describe 'Test Get-X509Certificates' {
+Describe 'Test Remove-X509Certificate' {
     BeforeAll {
         $ModuleHome = $script:PSCommandPath | Split-Path -Parent | Split-Path -Parent | Split-Path -Parent | Split-Path -Parent
 
@@ -19,7 +19,7 @@ Describe 'Test Get-X509Certificates' {
 
     Context 'Post executing New-Script' {
         It 'Should have command accessible' {
-            $Results = Get-Command Get-X509Certificates | Select-Object -ExpandProperty CommandType
+            $Results = Get-Command Remove-X509Certificate | Select-Object -ExpandProperty CommandType
             $Results | Should -Be 'Function'
         }
     }

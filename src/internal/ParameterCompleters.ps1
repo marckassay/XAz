@@ -96,6 +96,24 @@ $OpenPoliciesCompleter = {
     return [System.Security.Cryptography.X509Certificates.OpenFlags].GetEnumNames()
 }
 
+<#
+returns:
+    Thumbprint
+    SubjectName
+    SubjectDistinguishedName
+    IssuerName
+    IssuerDistinguishedName
+    SerialNumber
+    TimeValid
+    TimeNotYetValid
+    TimeExpired
+    TemplateName
+    ApplicationPolicy
+    CertificatePolicy
+    Extension
+    KeyUsage
+    SubjectKeyIdentifier
+#>
 $FindByTypesCompleter = {
     param ( 
         $commandName,
@@ -105,5 +123,43 @@ $FindByTypesCompleter = {
         $fakeBoundParameters
     )
 
-    return [System.Security.Cryptography.X509Certificates.X509FindType].GetEnumNames()
+    return [System.Security.Cryptography.X509Certificates.X509FindType].GetEnumNames() | `
+        ForEach-Object { $_.Split('FindBy')[1] }
+}
+
+$CertValueCompleter = {
+    param ( 
+        $commandName,
+        $parameterName,
+        $wordToComplete,
+        $commandAst,
+        $fakeBoundParameters
+    )
+    
+    $possibleValues = Get-X509Certificates
+    
+    # the $fakeBoundParameters values are: 'FindBy' and 'Value'
+    if ($fakeBoundParameters.ContainsKey('FindBy')) {
+        
+        # $FindByPropName is one of the values from $CertValueCompleter
+        $FindByPropName = $fakeBoundParameters.FindBy
+
+        if ($FindByPropName -eq 'Thumbprint') {
+
+            # for the following line, $wordToComplete is perhaps a partial value of a cert's Thumbprint 
+            $possibleValues | `
+                Where-Object { $_.Thumbprint -like "$wordToComplete*" } | `
+                Select-Object -ExpandProperty Thumbprint
+        }
+        # may be SubjectName or SubjectDistinguishedName; so below I'm not discriminating
+        elseif ($FindByPropName -like 'Subject*') {
+
+            # since without the following ForEach-Object, values are returned without quotes. it seems
+            # easier to read with quotes; hence the single-quotes
+            $possibleValues | `
+                Where-Object { $_.Subject -like "$wordToComplete*" } | `
+                Select-Object -ExpandProperty Subject | `
+                ForEach-Object { "'$_'" }
+        }
+    }
 }
