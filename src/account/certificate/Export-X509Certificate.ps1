@@ -31,17 +31,23 @@ function Export-X509Certificate {
     )
     
     end {
-        $FindBy = "FindBy"
-        $CloseAfter = $false
-
-        if (($null -eq $script:X509Store) -or ($script:X509Store.IsOpen -eq $false)) {
-            $CloseAfter = $true
-            Open-X509Store
+        $FindByX = "FindBy$FindBy"
+        
+        if ($FindByX -eq 'FindBySubject') {
+            $FindByX = 'FindBySubjectDistinguishedName'
         }
 
-        $script:X509Store.Certificates.Find($FindBy, $Value, $false);
+        if ($Value.Contains('*')) {
+            Get-X509Certificates | Where-Object { $_.Subject -like $Value }
+        }
+        else {
+            Open-X509Store
 
-        if ($CloseAfter -eq $true) {
+            Write-Debug "FindByX: FindBy$FindBy"
+            Write-Debug "Value: $Value"
+        
+            $script:X509Store.Certificates.Find($FindByX, $Value, $false);
+
             Close-X509Store
         }
     }

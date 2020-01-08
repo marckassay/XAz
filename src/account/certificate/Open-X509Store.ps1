@@ -46,6 +46,8 @@ function Open-X509Store {
         
         Close-X509Store
 
+        # TODO: check to make sure params are the same as existing store. otherwise close that 
+        # store and open new one
         if ($null -eq $script:X509Store ) {
             $script:X509Store = [System.Security.Cryptography.X509Certificates.X509Store]::new($StoreName, $StoreLocation)
             $script:X509Store.Open($OpenPolicy)

@@ -21,14 +21,7 @@ function Import-X509Certificate {
     )
 
     end {
-        $CloseAfter = $false
-
-        # if store isn't set or open...open it and then close it after adding certificate
-        # else, leave store opened
-        if (($null -eq $script:X509Store) -or ($script:X509Store.IsOpen -eq $false)) {
-            $CloseAfter = $true
-            Open-X509Store
-        }
+        Open-X509Store
 
         if ($CredentialPrompt.IsPresent -eq $true) {
             $Credential = Get-Credential -Message "Provide certificate's CommonName and Passphrase"
@@ -47,13 +40,11 @@ function Import-X509Certificate {
             $Certificate = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($CertContentBytes, '', $Flags)
         }
         else {
-            $Certificate = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($CertContentBytes, $Credential, $Flags)
+            $Certificate = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($CertContentBytes, $Credential.Password, $Flags)
         }
 
         $script:X509Store.Add($Certificate)
 
-        if ($CloseAfter -eq $true) {
-            Close-X509Store
-        }
+        Close-X509Store
     }
 }

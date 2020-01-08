@@ -35,11 +35,14 @@ function ConvertTo-PEMCertificate {
             @"
 $PrivateKey64
 $Certificate64
-	
+
 "@
         }
+        elseif ($Certificates.Count -eq 0) {
+            Write-Error "Found no certificate. 1 certificate is required"
+        }
         else {
-            Write-Error "The is more than 1 certificate when attempted to convert. Export only one certificate from store."
+            Write-Error "Found more than 1 certificate. Only 1 is required."
         }
     }
     

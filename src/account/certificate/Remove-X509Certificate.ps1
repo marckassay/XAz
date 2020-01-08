@@ -31,13 +31,7 @@ function Remove-X509Certificate {
     )
     
     end {
-        $FindBy = "FindBy$FindBy"
-        $CloseAfter = $false
-
-        if (($null -eq $script:X509Store) -or ($script:X509Store.IsOpen -eq $false)) {
-            $CloseAfter = $true
-            Open-X509Store
-        }
+        Open-X509Store
 
         $Certificate = Export-X509Certificate -FindBy $FindBy -Value $Value
         
@@ -45,8 +39,6 @@ function Remove-X509Certificate {
         Write-Warning -Message "The certificate from Credential Management will be removed if you accept?" -WarningAction Inquire
         $script:X509Store.Remove($Certificate)
 
-        if ($CloseAfter -eq $true) {
-            Close-X509Store
-        }
+        Close-X509Store
     }
 }

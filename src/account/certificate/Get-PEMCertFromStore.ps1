@@ -20,6 +20,11 @@ Register-ArgumentCompleter `
     -ParameterName FindBy `
     -ScriptBlock $FindByTypesCompleter
 
+Register-ArgumentCompleter `
+    -CommandName Get-PEMCertFromStore `
+    -ParameterName Value `
+    -ScriptBlock $CertValueCompleter
+
 function Get-PEMCertFromStore {
     [CmdletBinding(
         PositionalBinding = $false
@@ -67,7 +72,7 @@ function Get-PEMCertFromStore {
         Open-X509Store -StoreName $StoreName -StoreLocation $StoreLocation -OpenPolicy $OpenPolicy | `
             Export-X509Certificate -FindBy $FindBy -Value $Value | `
             ConvertTo-PEMCertificate | `
-            Set-Content -Path $TempFile.FullName -Encoding utf8
+            Set-Content -Path $TempFile.FullName -Encoding utf8 -NoNewline
 
         Close-X509Store
         

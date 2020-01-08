@@ -1,3 +1,4 @@
+# To view releases: https://docs.microsoft.com/en-us/cli/azure/release-notes-azure-cli
 function Invoke-AzureCLIDownload {
     
     [CmdletBinding(PositionalBinding = $true)]

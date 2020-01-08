@@ -120,7 +120,7 @@ function New-SelfSignedCert {
 
             $PrivateKeyPath = Join-Path -Path $Path -ChildPath 'private-key.pem'
             $CertKeyPath = Join-Path -Path $Path -ChildPath 'certificate.pem'
-            $PK12Path = Join-Path -Path $Path -ChildPath 'certificate.pk12'
+            $P12Path = Join-Path -Path $Path -ChildPath 'certificate.p12'
 
             if (-not $Interactive.IsPresent) {
                 $Subject = "/emailAddress=$Email/C=$Country/ST=$State/L=$Location/O=$Organization/OU=$OrganizationUnit/CN=$CommonName"
@@ -131,7 +131,7 @@ function New-SelfSignedCert {
                 openssl req -nodes -newkey rsa:2048 -keyout $PrivateKeyPath -x509 -days 365 -out $CertKeyPath
             }
 
-            openssl pkcs12 -inkey $PrivateKeyPath -in $CertKeyPath -export -out $PK12Path
+            openssl pkcs12 -inkey $PrivateKeyPath -in $CertKeyPath -export -out $P12Path
         }
         else {
             if ($CertExePath) {

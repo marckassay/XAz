@@ -124,6 +124,8 @@ $FindByTypesCompleter = {
     )
 
     return [System.Security.Cryptography.X509Certificates.X509FindType].GetEnumNames() | `
+        Where-Object { ($_ -like '*Thumbprint') -or ($_ -like '*SubjectDistinguish*') } | `
+        ForEach-Object { if ($_ -like '*SubjectDistinguish*') { return 'FindBySubject' } else { $_ } } | `
         ForEach-Object { $_.Split('FindBy')[1] }
 }
 
@@ -151,8 +153,7 @@ $CertValueCompleter = {
                 Where-Object { $_.Thumbprint -like "$wordToComplete*" } | `
                 Select-Object -ExpandProperty Thumbprint
         }
-        # may be SubjectName or SubjectDistinguishedName; so below I'm not discriminating
-        elseif ($FindByPropName -like 'Subject*') {
+        elseif ($FindByPropName -eq 'Subject') {
 
             # since without the following ForEach-Object, values are returned without quotes. it seems
             # easier to read with quotes; hence the single-quotes
