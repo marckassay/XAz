@@ -1,6 +1,6 @@
-Describe 'Test ConvertTo-PEMCertificateString' {
+Describe 'Test Get-XAzAccountIds' {
     BeforeAll {
-        $ModuleHome = $script:PSCommandPath | Split-Path -Parent | Split-Path -Parent | Split-Path -Parent | Split-Path -Parent
+        $ModuleHome = $script:PSCommandPath | Split-Path -Parent | Split-Path -Parent | Split-Path -Parent
 
         # Reimports 'XAz'.  If its not currently import just silently continue
         Remove-Module -Name 'XAz' -ErrorAction SilentlyContinue
@@ -19,7 +19,7 @@ Describe 'Test ConvertTo-PEMCertificateString' {
 
     Context 'Post executing New-Script' {
         It 'Should have command accessible' {
-            $Results = Get-Command ConvertTo-PEMCertificateString | Select-Object -ExpandProperty CommandType
+            $Results = Get-Command Get-XAzAccountIds | Select-Object -ExpandProperty CommandType
             $Results | Should -Be 'Function'
         }
     }

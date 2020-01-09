@@ -1,4 +1,4 @@
-function ConvertTo-PEMCertificate {
+function ConvertTo-PEMCertificateString {
     [CmdletBinding(
         PositionalBinding = $false
     )]

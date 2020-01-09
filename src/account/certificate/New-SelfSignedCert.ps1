@@ -5,7 +5,6 @@ function New-SelfSignedCert {
     Param(
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "The method of searching in the store, using the parameter Value.",
             Position = 1
         )]
         [string]$Path = $(Get-Location | Select-Object -ExpandProperty $Path),

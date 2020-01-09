@@ -1,4 +1,4 @@
-Describe 'Test ConvertTo-PEMCertificateString' {
+Describe 'Test Get-SelfSignedCertParamObject' {
     BeforeAll {
         $ModuleHome = $script:PSCommandPath | Split-Path -Parent | Split-Path -Parent | Split-Path -Parent | Split-Path -Parent
 
@@ -19,7 +19,7 @@ Describe 'Test ConvertTo-PEMCertificateString' {
 
     Context 'Post executing New-Script' {
         It 'Should have command accessible' {
-            $Results = Get-Command ConvertTo-PEMCertificateString | Select-Object -ExpandProperty CommandType
+            $Results = Get-Command Get-SelfSignedCertParamObject | Select-Object -ExpandProperty CommandType
             $Results | Should -Be 'Function'
         }
     }

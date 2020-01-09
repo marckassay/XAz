@@ -1,4 +1,4 @@
-Describe 'Test Get-PEMCertFromStore' {
+Describe 'Test Get-PEMCertificate' {
     BeforeAll {
         $ModuleHome = $script:PSCommandPath | Split-Path -Parent | Split-Path -Parent | Split-Path -Parent | Split-Path -Parent
 
@@ -19,7 +19,7 @@ Describe 'Test Get-PEMCertFromStore' {
 
     Context 'Post executing New-Script' {
         It 'Should have command accessible' {
-            $Results = Get-Command Get-PEMCertFromStore | Select-Object -ExpandProperty CommandType
+            $Results = Get-Command Get-PEMCertificate | Select-Object -ExpandProperty CommandType
             $Results | Should -Be 'Function'
         }
     }
