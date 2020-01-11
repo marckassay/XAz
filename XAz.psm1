@@ -10,8 +10,10 @@ using module .\src\account\certificate\Import-X509Certificate.ps1
 using module .\src\account\certificate\New-SelfSignedCert.ps1
 using module .\src\account\certificate\Open-X509Store.ps1
 using module .\src\account\certificate\Remove-X509Certificate.ps1
+using module .\src\account\Confirm-XAzAccount.ps1
 using module .\src\account\Connect-XAzAccount.ps1
 using module .\src\account\Get-XAzAccountInfo.ps1
+using module .\src\account\Set-XAzAccountInfo.ps1
 using module .\src\internal\Read-Confirmation.ps1
 using module .\src\registry\Approve-XAzRegistryName.ps1
 using module .\src\registry\Get-XAzContainerRegistryTags.ps1

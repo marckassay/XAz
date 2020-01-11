@@ -5,63 +5,80 @@ function Get-XAzAccountInfo {
         PositionalBinding = $false
     )]
     Param(
-        [Parameter(
-            Mandatory = $false,
-            HelpMessage = "Omit retrieving from either 'az cli' or 'PowerShell Az module'.",
-            ValueFromPipeline = $false,
-            Position = 0
-        )]
-        [ValidateSet("az cli", "Az module")]
-        [string]$Omit
+        [switch]$OnlyAzCli,
+        [switch]$OnlyAzModule
     )
     
     end {
-        
-        if ($Omit -ne 'az cli') {
 
-            # get signed-in account
-            $SignedInAccountForCLI = ConvertTo-Json -InputObject $(az account show 2>&1) -ErrorAction 'SilentlyContinue'
-            if ($SignedInAccountForCLI.Contains('Error') -eq $false) {
+        if ($OnlyAzModule -eq $false) {
 
-                $SignedInAccountForCLI = $SignedInAccountForCLI | ForEach-Object {
+            # get signed-in account. if Count has a value of greater than 1, then its not an error message 
+            [object[]]$SignedInAccountForCLI = az account show 2>&1
+            if ($SignedInAccountForCLI.Count -gt 1) {
+
+                $SignedInAccountForCLI = $SignedInAccountForCLI | `
+                    ConvertFrom-Json -ErrorAction 'SilentlyContinue' | `
+                    ForEach-Object {
                     # hash is being regenerated here so that equality check will be simplier done below
                     $hash = [System.HashCode]::Combine($_.id + $_.isDefault + $_.name + $_.tenantId + $_.user.name)
                     $_ | Add-Member -NotePropertyName Hash -NotePropertyValue $hash
                     $_ | Add-Member -NotePropertyName IsSignedIn -NotePropertyValue $true
                     $_
                 }
+            }
+            else {
+                $SignedInAccountForCLI = @{Hash = -1; IsSignedIn = $false }
+            }
 
-                # get all available accounts
-                [object[]]$AvailableAccountsForCLI = az account list | ConvertFrom-Json -ErrorAction 'SilentlyContinue'
+            # get all available accounts
+            [object[]]$AvailableAccountsForCLI = az account list 2>&1
+
+            # since an error-record and empty array is returned, further introspection is requried to make an assessment. 
+            $IsAvailable = $AvailableAccountsForCLI | `
+                Where-Object { $_ -Is 'System.Management.Automation.ErrorRecord' } | `
+                Measure-Object | `
+                ForEach-Object { $($_.Count -eq 0) }
             
-                $AvailableAccountsForCLI = $AvailableAccountsForCLI | ForEach-Object {
+            if ($IsAvailable) {
+                # TODO: not sure how to AvailableAccountsForCLI into pipe. this has to do with pscustomobjects
+                $AvailableAccountsForCLI = az account list | ConvertFrom-Json
+                $AvailableAccountsForCLI = $AvailableAccountsForCLI | ForEach-Object -Process {
                     $hash = [System.HashCode]::Combine($_.id + $_.isDefault + $_.name + $_.tenantId + $_.user.name)
                     $_ | Add-Member -NotePropertyName Hash -NotePropertyValue $hash
                     $_ | Add-Member -NotePropertyName IsSignedIn -NotePropertyValue $false
                     $_
-                } 
-
-                $AvailableAccountsForCLI += $SignedInAccountForCLI
-
-                [AccountInfo[]] $AiCLI = $AvailableAccountsForCLI | ForEach-Object {
-                    if (($_.Hash -ne $SignedInAccountForCLI.Hash) -or ($_.IsSignedIn -eq $true)) {
-                        $Account = [AccountInfo]::new()
-                        $Account.Program = 'az cli'
-                        $Account.SubscriptionId = $_.id
-                        $Account.TenantId = $_.tenantId
-                        $Account.IsDefault = $_.isDefault
-                        $Account.IsSignedIn = $_.IsSignedIn
-                        $Account.SignedInIdentity = $_.user.name
-                        $Account
-                    }
                 }
             }
             else {
-                $AiCLI
+                $AvailableAccountsForCLI = @{Hash = -1; IsSignedIn = $false }
+            }
+
+            $AvailableAccountsForCLI += $SignedInAccountForCLI
+            
+            [AccountInfo[]] $AiCLI = $AvailableAccountsForCLI | ForEach-Object {
+                if (($_.Hash -ne $SignedInAccountForCLI.Hash) -or ($_.IsSignedIn -eq $true)) {
+                    $Account = [AccountInfo]::new()
+                    $Account.Program = 'az cli'
+                    $Account.SubscriptionId = $_.id
+                    $Account.TenantId = $_.tenantId
+                    $Account.IsDefault = $_.isDefault
+                    $Account.IsSignedIn = $_.IsSignedIn
+                    $Account.SignedInIdentity = $_.user.name
+                    $Account.Hash = $_.Hash
+                    $Account
+                }
+            }
+
+            if (-not $AiCLI) {
+                $AiCLI = @()
             }
         }
+        else {
+            $AiCLI = $null
+        }
 
-        if ($Omit -ne 'Az module') {
+        if ($OnlyAzCli.IsPresent -eq $false) {
 
             # get signed-in user
             $SignedInUserForPS = Get-AzContext
@@ -99,12 +116,19 @@ function Get-XAzAccountInfo {
                     $Account.IsSignedIn = $_.IsSignedIn
                     $Account.SignedInIdentity = $_.Account.Id
                     $Account.ContextName = $_.Name
+                    $Account.Hash = $_.Hash
                     $Account
                 }
             }
+
+            if (-not $AiPS) {
+                $AiPS = @()
+            }
+        }
+        else {
+            $AiPS = $null
         }
         
-        $AiCLI += $AiPS
-        $AiCLI
+        [AccountInfoHash]::new($AiCLI, $AiPS)
     }
 }
