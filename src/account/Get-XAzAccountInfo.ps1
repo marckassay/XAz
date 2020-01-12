@@ -59,13 +59,14 @@ function Get-XAzAccountInfo {
             [AccountInfo[]] $AiCLI = $AvailableAccountsForCLI | ForEach-Object {
                 if (($_.Hash -ne $SignedInAccountForCLI.Hash) -or ($_.IsSignedIn -eq $true)) {
                     $Account = [AccountInfo]::new()
-                    $Account.Program = 'az cli'
+                    $Account.Program = [AccountInfo]::Cli
                     $Account.SubscriptionId = $_.id
                     $Account.TenantId = $_.tenantId
                     $Account.IsDefault = $_.isDefault
                     $Account.IsSignedIn = $_.IsSignedIn
                     $Account.SignedInIdentity = $_.user.name
                     $Account.Hash = $_.Hash
+                    $Account | Add-Member -NotePropertyName ProgramValue -NotePropertyValue $([AccountInfo]::Cli.Value)
                     $Account
                 }
             }
@@ -109,7 +110,7 @@ function Get-XAzAccountInfo {
             [AccountInfo[]] $AiPS = $AvailableAccountsForPS | ForEach-Object {
                 if (($_.Hash -ne $SignedInUserForPS.Hash) -or ($_.IsSignedIn -eq $true)) {
                     $Account = [AccountInfo]::new()
-                    $Account.Program = 'Az module'
+                    $Account.Program = [AccountInfo]::Module
                     $Account.SubscriptionId = $_.Subscription.Id
                     $Account.TenantId = $_.Tenant.Id
                     $Account.IsDefault = $_.isDefault
@@ -117,6 +118,7 @@ function Get-XAzAccountInfo {
                     $Account.SignedInIdentity = $_.Account.Id
                     $Account.ContextName = $_.Name
                     $Account.Hash = $_.Hash
+                    $Account | Add-Member -NotePropertyName ProgramValue -NotePropertyValue $([AccountInfo]::Module.Value)
                     $Account
                 }
             }
@@ -129,6 +131,6 @@ function Get-XAzAccountInfo {
             $AiPS = $null
         }
         
-        [AccountInfoHash]::new($AiCLI, $AiPS)
+        [AccountInfoCollection]::new($AiCLI, $AiPS)
     }
 }

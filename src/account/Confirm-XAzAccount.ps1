@@ -11,7 +11,7 @@ function Confirm-XAzAccount {
             ValueFromPipeline = $false,
             Position = 0
         )]
-        [AccountInfoHash]$Accounts,
+        [AccountInfoCollection]$Accounts,
 
         [switch]$OnlyAzCli,
         [switch]$OnlyAzModule,
@@ -22,14 +22,12 @@ function Confirm-XAzAccount {
     
     end {
         
-        if (($null -ne $Accounts.Cli) -and ($OnlyAzModule -eq $false)) {
+        if (($Accounts.Cli) -and ($OnlyAzModule -eq $false)) {
             $Exit = $false
-
+            
             # for 'az cli', only one Subscription-Tenant can exist. so no switching can occur between 2 princiapls. if no results from show,
             # but results from list; user can select so that a princiapl can be switched to another subscription using this method.
-            if ($Accounts.Cli) {
-                $SignedInCLI = ($Accounts.Cli) | Where-Object { ($_.Program -eq 'az cli') -and ($_.IsSignedIn -eq $true) } | Select-Object -First 1
-            }
+            $SignedInCLI = $Accounts.GetSignedInCliAccount()
 
             if ($SignedInCLI) {
                 Write-Host "Currently 'az cli' is signed-in having the following account info:" -ForegroundColor 'DarkGreen'
@@ -52,7 +50,7 @@ function Confirm-XAzAccount {
                 }
 
                 $Index = 0
-                $SignedOutCLI = ($Accounts.Cli) | Where-Object { ($_.Program -eq 'az cli') -and ($_.IsSignedIn -eq $false) }
+                $SignedOutCLI = $Accounts.GetSignedOutCliAccount()
                 $AIs = 1..($SignedOutCLI.Count + 1)
                 $SignedOutCLI | ForEach-Object -Process {
                     Write-Host ("Press '" + ++$Index + "' to set account to use subscription: " + $_.SubscriptionId) -ForegroundColor Yellow
@@ -84,17 +82,15 @@ function Confirm-XAzAccount {
             }
         }
         
-        if (($null -ne $Accounts.Module) -and ($OnlyAzCli -eq $false)) {
+        if (($Accounts.Module) -and ($OnlyAzCli -eq $false)) {
 
             if ($Selection -ge 0) {
                 Write-Host ""
             }
 
-            if ($Accounts.Module) {
-                # for 'Az module', multiple Subscription-Tenant contexts can exist. so selecting between 2 principlas can happen
-                $SignedInPS = ($Accounts.Module) | Where-Object { ($_.Program -eq 'Az module') -and ($_.IsSignedIn -eq $true) } | Select-Object -First 1
-                $SignedOutPS = ($Accounts.Module) | Where-Object { ($_.Program -eq 'Az module') -and ($_.IsSignedIn -eq $false) }
-            }
+            # for 'Az module', multiple Subscription-Tenant contexts can exist. so selecting between 2 principlas can happen
+            $SignedInPS = $Accounts.GetSignedInModuleAccount()
+            $SignedOutPS = $Accounts.GetSignedOutModuleAccount()
 
             if ($SignedInPS) {
                 Write-Host "Currently 'Az module' is signed-in having the following account info:" -ForegroundColor 'DarkGreen'
@@ -164,6 +160,6 @@ function Confirm-XAzAccount {
             }
         }
 
-        $Results
+        # $Results
     }
 }

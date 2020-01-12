@@ -13,7 +13,7 @@ using module .\src\account\certificate\Remove-X509Certificate.ps1
 using module .\src\account\Confirm-XAzAccount.ps1
 using module .\src\account\Connect-XAzAccount.ps1
 using module .\src\account\Get-XAzAccountInfo.ps1
-using module .\src\account\Set-XAzAccountInfo.ps1
+using module .\src\account\Set-XAzServicePrincipal.ps1
 using module .\src\internal\Read-Confirmation.ps1
 using module .\src\registry\Approve-XAzRegistryName.ps1
 using module .\src\registry\Get-XAzContainerRegistryTags.ps1
@@ -22,6 +22,7 @@ using module .\src\resources\Confirm-XAzResourceGroup.ps1
 using module .\src\resources\Get-XAzTemplateObject.ps1
 using module .\src\utility\Invoke-AzureCLIDownload.ps1
 using module .\src\utility\Set-StepMessage.ps1
+using module .\src\utility\Test-Object.ps1
 using module .\src\utility\Write-StepMessage.ps1
 using module .\src\webapp\Approve-XAzDomainName.ps1
 
