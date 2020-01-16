@@ -4,7 +4,7 @@ using module .\src\account\certificate\Disable-X509FormatDataView.ps1
 using module .\src\account\certificate\Enable-X509FormatDataView.ps1
 using module .\src\account\certificate\Export-X509Certificate.ps1
 using module .\src\account\certificate\Get-PEMCertificate.ps1
-using module .\src\account\certificate\Get-SelfSignedCertParamObject.ps1
+using module .\src\account\certificate\New-SelfSignedCertParamObject.ps1
 using module .\src\account\certificate\Get-X509Certificates.ps1
 using module .\src\account\certificate\Import-X509Certificate.ps1
 using module .\src\account\certificate\New-SelfSignedCert.ps1

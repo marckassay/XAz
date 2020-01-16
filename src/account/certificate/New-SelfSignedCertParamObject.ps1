@@ -1,4 +1,4 @@
-function Get-SelfSignedCertParamObject {
+function New-SelfSignedCertParamObject {
     [CmdletBinding(
         PositionalBinding = $false
     )]

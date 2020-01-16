@@ -12,7 +12,7 @@
     RootModule           = 'XAz.psm1'
 
     # Version number of this module.
-    ModuleVersion        = '1.0.2'
+    ModuleVersion        = '2.0.0'
 
     # Supported PSEditions
     CompatiblePSEditions = @('Core')
@@ -81,7 +81,7 @@
         'Enable-X509FormatDataView',
         'Export-X509Certificate',
         'Get-PEMCertificate',
-        'Get-SelfSignedCertParamObject',
+        'New-SelfSignedCertParamObject',
         'Get-X509Certificates',
         'Get-XAzAccountInfo',
         'Get-XAzContainerRegistryTags',
@@ -96,7 +96,6 @@
         'Set-StepMessage',
         'Set-XAzAccountInfo',
         'Set-XAzServicePrincipal',
-        'Test-Object',
         'Write-StepMessage'
     )
 
@@ -147,6 +146,4 @@
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''
-
 }
-
